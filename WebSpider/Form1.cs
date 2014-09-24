@@ -17,6 +17,7 @@ using System.IO;
 using System.Collections.Specialized;
 using System.Web;
 using WebSpider.WebSpiderDbTableAdapters;
+using Newtonsoft.Json;
 
 namespace WebSpider
 {
@@ -51,7 +52,7 @@ namespace WebSpider
         }
         private void buttonGo_Click(object sender, EventArgs e)
         {
-            
+            String response = "{{\"d\":{{\"__type\":\"eComm.Web.DataItems.InventoryServiceResponse\",\"Response\":{{\"RegionalHubName\":\"\",\"RegionalCount\":0,\"NationalCount\":0,\"Stores\":[],\"Regional\":[],\"National\":[],\"Hubs\":[],\"Ring\":[{{\"id\":\"{{F39BC32F-B80B-4940-A0BF-511ED2B199CE}}\",\"dc\":\"OK\",\"region\":\"06\",\"storeName\":\"OKLAHOMA\",\"address1\":\"3801 S. MOULTON DRIVE\",\"address2\":\"\",\"address3\":\"\",\"country\":\"US\",\"city\":\"OKLAHOMA CITY\",\"state\":\"OK\",\"stateName\":\"Oklahoma\",\"zip\":\"73179\",\"phone\":\"405.681.4008\",\"fax\":\"405.681.4435\",\"lat\":\"35.4261399\",\"lon\":\"-97.6157333\",\"inventory\":\"0\",\"manager\":null,\"responseCode\":\"\",\"responseMessage\":\"\",\"IsHub\":false}}]}},\"Status\":{{\"Id\":\"\",\"Code\":\"\",\"Message\":\"\",\"SubFunction\":\"\",\"MajorFunction\":\"\"}},\"Information\":{{\"Copyright\":\"© 2014 ADI\",\"Url\":\"http://adiglobal.us\",\"Message\":\"\"}}}}}}";
 
             #region [Load Data]
             //MyUri uri = new MyUri("http://adiglobal.us/Manufacturer%20Logos/Standard/08273.jpg");
@@ -175,15 +176,15 @@ namespace WebSpider
             #region [Load Catagory]
             //string url = "https://adiglobal.us/Company/Pages/Mktg_ShopProducts.aspx?cat=ADI%20US&category=0000&parent=0000";
             //string url = "https://adiglobal.us:443/Company/Pages/Mktg_AccessAuth.aspx?cat=ADI%20US&category=6000&parent=0000";
-            String url = "https://adiglobal.us:443/Pages/default.aspx";
-            List<Categories> oCategories = new List<Categories>();
-            Spider oSpider = new Spider(browser);
-            oCategories = oSpider.ParseCatagory(url);
-            AddToCatagory(oCategories);
+            //String url = "https://adiglobal.us:443/Pages/default.aspx";
+            //List<Categories> oCategories = new List<Categories>();
+            //Spider oSpider = new Spider(browser);
+            //oCategories = oSpider.ParseCatagory(url);
+            //AddToCatagory(oCategories);
             #endregion
 
             //new Crawler().GetProductSpecification("NC-PX26H", "Security Cards & Tokens_10394");
-            //new Crawler().GetInventory();
+            String responseJson = new Crawler().GetInventory(browser);
         }
 
         

@@ -120,21 +120,25 @@ namespace WebSpider.Core
             //var rows = CacheDB.Tables[_dtName].AsEnumerable().Where(x => x.Field<DateTime>("ValidTill") <= DateTime.Now);
             // delete outdated files
             // delete invalid data from cache db
-            if (!ReferenceEquals(CacheDB, null))
+            try
             {
-                foreach (DataRow dRow in CacheDB.Tables[_dtName].Rows)
+                if (!ReferenceEquals(CacheDB, null))
                 {
-                    if ((DateTime)dRow["ValidTill"] < DateTime.Now)
+                    foreach (DataRow dRow in CacheDB.Tables[_dtName].Rows)
                     {
-                        File.Delete(GetFullFileName(dRow["FileName"].ToString()));
-                        dRow.Delete();
-                    }
-                    else if (!File.Exists(GetFullFileName(dRow["FileName"].ToString())))
-                    {
-                        dRow.Delete();
+                        if ((DateTime)dRow["ValidTill"] < DateTime.Now)
+                        {
+                            File.Delete(GetFullFileName(dRow["FileName"].ToString()));
+                            dRow.Delete();
+                        }
+                        else if (!File.Exists(GetFullFileName(dRow["FileName"].ToString())))
+                        {
+                            dRow.Delete();
+                        }
                     }
                 }
             }
+            catch { }
         }
         #endregion
 
