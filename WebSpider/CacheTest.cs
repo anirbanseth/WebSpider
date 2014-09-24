@@ -13,17 +13,19 @@ namespace WebSpider
 {
     public partial class CacheTest : Form
     {
+        Browser browser;
+
         public CacheTest()
         {
             InitializeComponent();
+            browser = new Browser();
         }
 
         private void btnGo_Click(object sender, EventArgs e)
         {
             String Url = txtUrl.Text;
-            Boolean cached = Cache.IsCachedUrl(Url);
-            Log("Cached - "  + cached.ToString());
-            Log(Cache.GetUrl(Url).ToString());
+            browser.Url = Url;
+            Log(browser.GetWebRequest().ToString());
         }
 
         private void Log(String text)

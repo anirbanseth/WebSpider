@@ -38,9 +38,14 @@
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\..\..\..\..\..\SW\AjaxControlToolkit.Binary.NET45\HtmlAgilityPack.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\Json.net\Bin\Portable\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -52,6 +57,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Browser.cs" />
+    <Compile Include="Core\CacheDb.cs" />
     <Compile Include="CacheTest.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -62,6 +69,9 @@
     <Compile Include="Core\Cache.cs" />
     <Compile Include="Core\Crawler.cs" />
     <Compile Include="Core\DataConnection.cs" />
+    <Compile Include="Core\HttpClient.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Core\Spider.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -83,7 +93,6 @@
     <Compile Include="WebRes.cs" />
     <Compile Include="WebSpiderDb.cs">
       <DependentUpon>WebSpiderDb.xsd</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="WebSpiderDb.Designer.cs">
       <AutoGen>True</AutoGen>

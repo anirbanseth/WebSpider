@@ -4,18 +4,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
+using System.Net;
+using System.Data;
+using Newtonsoft.Json;
 
 namespace WebSpider.Core
 {
    public class Spider
     {
+       Cache Cache = new Cache();
+       Browser browser = new Browser();
+
+       public Spider() {}
+       public Spider(Browser browser)
+       {
+           this.browser = browser;
+       }
+
        public List<Categories> ParseCatagory(string url)
         {
             List<Categories> categoriesList = new List<Categories>();
             #region [URL Scraping]
             //var getHtmlWeb = new HtmlWeb();
             //var doc = getHtmlWeb.Load(url);
-            var doc = Cache.GetUrl(url);
+            //var doc = Cache.GetUrl(url);
+            browser.Url = url;
+            var doc = browser.GetWebRequest();
             #endregion
 
 
@@ -48,7 +62,10 @@ namespace WebSpider.Core
             #region [URL Scraping]
             //var getHtmlWeb1 = new HtmlWeb();
             //var doc1 = getHtmlWeb1.Load(url);
-            var doc1 = Cache.GetUrl(url);
+            //var doc1 = Cache.GetUrl(url);
+            browser.Url = url;
+            browser.Url = url;
+            var doc1 = browser.GetWebRequest();
             #endregion
 
             HtmlNode node = doc1.DocumentNode.SelectSingleNode("//div[@class='categories']");
@@ -83,7 +100,9 @@ namespace WebSpider.Core
             #region [URL Scraping]
             //var getHtmlWeb = new HtmlWeb();
             //var doc = getHtmlWeb.Load(url);
-            var doc = Cache.GetUrl(url);
+            //var doc = Cache.GetUrl(url);
+            browser.Url = url;
+            var doc = browser.GetWebRequest();
             #endregion
 
 
@@ -180,5 +199,38 @@ namespace WebSpider.Core
             }
         }
 
+
+        #region [Product Specifications]
+        public void GetProductSpecification(String ProductID, String ProductName)
+        {
+            WebClient webclient = new WebClient();
+            Uri uristring = null;
+            uristring = new Uri("http://adiglobal.us/_vti_bin/requests.asmx/ProductSpecifications");
+            webclient.Headers.Add("Content-Type", "application/json; charset=utf-8");
+            webclient.Headers["ContentType"] = "application/json";
+            string JsonStringParams = String.Format("{{\'productID\':\'{0}\',\'productDefinitionName\':\'{1}\'}}", ProductID, ProductName);
+            webclient.UploadStringCompleted += wc_ParseProductSpecs;
+            //String responce = webclient.UploadString("http://adiglobal.us/_vti_bin/requests.asmx/ProductSpecifications", JsonStringParams);
+            //Post data like this
+            webclient.UploadStringAsync(uristring, "POST", JsonStringParams);
+        }
+        private void wc_ParseProductSpecs(object sender, UploadStringCompletedEventArgs e)
+        {
+            try
+            {
+
+                if (e.Result != null)
+                {
+                    string responce = e.Result.ToString();
+                    //To Do Your functionality
+                    DataSet dataSet = JsonConvert.DeserializeObject<DataSet>(responce);
+                }
+            }
+            catch
+            {
+            }
+        }
+        #endregion
+        
     }
 }
