@@ -73,6 +73,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Core\Spider.cs" />
+    <Compile Include="Core\SpiderThread.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

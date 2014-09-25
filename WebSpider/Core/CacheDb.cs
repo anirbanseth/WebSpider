@@ -12,7 +12,7 @@ namespace WebSpider.Core
 {
     public class CacheDb
     {
-        #region [Constabnts]
+        #region [Constants]
         private const String _dsName = "UrlCache";
         private const String _dtName = "Cache";
         #endregion
@@ -199,7 +199,7 @@ namespace WebSpider.Core
                 dRow["LastUpdated"] = DateTime.Now;
                 dRow["ValidTill"] = DateTime.Now.AddMinutes(_cacheValidity);
                 CacheDB.Tables[_dtName].Rows.Add(dRow);
-                
+                CacheDB.WriteXml("Cache.xml");
             }
             catch { }
         }

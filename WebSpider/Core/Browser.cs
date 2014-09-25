@@ -7,6 +7,7 @@ using HtmlAgilityPack;
 using System.Net;
 using System.Collections.Specialized;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace WebSpider.Core
 {
@@ -91,15 +92,21 @@ namespace WebSpider.Core
             }
 
             string JsonStringParams = "{" + String.Join(",", Parameters)  + "}";
-            return httpClient.UploadString(Url, JsonStringParams);
+            String JsonResult = httpClient.UploadString(Url, JsonStringParams);
+            return JsonResult;
         }
 
-        //public static object parseJson(String htmlText)
-        //{
-        //    var jsonSerialization = new JavaScriptSerializer();
-        //    var dictObj = jsonSerialization.Deserialize<Dictionary<string, dynamic>>(json);
+        public Dictionary<string, object> ParseJson(String JsonResult)
+        {
+            Dictionary<string, object> temp = JsonConvert.DeserializeObject<Dictionary<string, object>>(JsonResult);
+            return temp;
+        }
 
-        //}
+        public String GetValueFromJson(String JsonResult, String Key)
+        {
+            Dictionary<string, object> temp = ParseJson(JsonResult);
+            return "";
+        }
 
         public void DownloadFile(String FileName)
         {
